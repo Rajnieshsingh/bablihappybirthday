@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Babli 👑 From Rajnish</title>
+    <style>
+        :root {
+            --primary: #ff3366;
+            --accent: #ff85a2;
+            --gold: #ffb703;
+            --dark-pink: #4a0e1c;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --blur: blur(20px);
+        }
+
+        [data-theme="midnight"] {
+            --primary: #ff477e;
+            --accent: #ff85a2;
+            --gold: #ffca3a;
+            --dark-pink: #fff0f3;
+            --glass-bg: rgba(28, 11, 17, 0.85);
+            --blur: blur(25px);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0; padding: 0;
+            font-family: 'Georgia', serif;
+        }
+
+        body {
+            color: var(--dark-pink);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 10px;
+            overflow-x: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #ffebee 0%, #fce4ec 50%, #f8bbd0 100%);
+            transition: background 0.8s ease;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #100507 0%, #250b11 50%, #400d18 100%);
+        }
+
+        /* Ambient Parallax Sky */
+        #magic-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1;
+        }
+        .particle {
+            position: absolute; bottom: -50px;
+            animation: floatUp 8s infinite linear; opacity: 0.6;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0.6; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-115vh) scale(1.5) rotate(360deg); opacity: 0; }
+        }
+
+        /* Floating Controls */
+        .controls {
+            position: fixed; top: 20px; right: 20px;
+            display: flex; gap: 12px; z-index: 100;
+        }
+        .util-btn {
+            background: var(--glass-bg); backdrop-filter: var(--blur);
+            border: 1px solid var(--accent); color: var(--dark-pink);
+            padding: 10px 16px; border-radius: 30px; font-weight: bold;
+            cursor: pointer; font-size: 0.85rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        /* The Main Sanctuary Box */
+        .oasis-container {
+            background: var(--glass-bg);
+            backdrop-filter: var(--blur);
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            width: 100%; max-width: 600px;
+            padding: 45px 30px;
+            box-shadow: 0 30px 70px rgba(74, 14, 28, 0.15);
+            z-index: 10; text-align: center;
+            position: relative;
+        }
+
+        .header-zone h1 { font-size: 2.8rem; color: var(--primary); font-weight: 900; letter-spacing: -1px; }
+        .header-zone p { font-size: 1.05rem; font-style: italic; opacity: 0.85; margin-bottom: 30px; }
+
+        /* Navigation Strip */
+        .dock {
+            display: flex; background: rgba(0,0,0,0.04);
+            padding: 6px; border-radius: 50px; margin-bottom: 35px;
+            gap: 5px;
+        }
+        .dock-item {
+            background: none; border: none; padding: 14px 10px;
+            color: var(--dark-pink); font-weight: bold; font-size: 0.9rem;
+            cursor: pointer; border-radius: 40px; flex: 1;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .dock-item.active {
+            background: var(--primary); color: white;
+            box-shadow: 0 8px 20px rgba(255, 51, 102, 0.3);
+        }
+
+        .screen { display: none; animation: slideIn 0.5s ease-out; min-height: 300px; }
+        .screen.active { display: block; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Virtual Fireworks Canvas Box */
+        .gift-box-area {
+            position: relative; width: 160px; height: 160px; margin: 30px auto;
+            cursor: pointer;
+        }
+        .gift-box-emoji {
+            font-size: 6rem; animation: wobble 2s infinite ease-in-out;
+            display: inline-block;
+        }
+        @keyframes wobble {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-8deg) scale(1.05); }
+            75% { transform: rotate(8deg) scale(1.05); }
+        }
+
+        /* Memory Lane Letter Strip */
+        .letter-wrap {
+            background: rgba(255, 255, 255, 0.4); border-radius: 24px; padding: 30px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.02); text-align: left;
+            line-height: 1.9; font-size: 1.1rem; border-top: 4px solid var(--primary);
+        }
+        .signature { text-align: right; margin-top: 25px; font-weight: bold; font-size: 1.2rem; color: var(--primary); }
+
+        /* Love Meter / Interactive Reasons Setup */
+        .meter-track { background: rgba(0,0,0,0.05); border-radius: 20px; height: 24px; width: 100%; overflow: hidden; margin: 25px 0; border: 1px solid var(--accent); }
+        .meter-fill { height: 100%; width: 20%; background: linear-gradient(90deg, var(--accent), var(--primary)); transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        .reason-card {
+            font-size: 1.25rem; font-weight: bold; font-style: italic; min-height: 90px;
+            display: flex; align-items: center; justify-content: center; padding: 15px;
+            background: rgba(255,255,255,0.3); border-radius: 20px; margin-top: 20px;
+        }
+
+        /* Infinite Heartbeat Hub */
+        .heartbeat-core {
+            width: 130px; height: 130px; background: var(--primary);
+            border-radius: 50%; margin: 35px auto;
+            display: flex; justify-content: center; align-items: center;
+            color: white; font-size: 3rem; cursor: pointer;
+            box-shadow: 0 0 30px var(--primary);
+            animation: beat 1s infinite alternate cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        @keyframes beat {
+            from { transform: scale(1); box-shadow: 0 0 25px var(--primary); }
+            to { transform: scale(1.18); box-shadow: 0 0 45px var(--accent); }
+        }
+
+        /* Action Buttons */
+        .btn-core {
+            background: var(--primary); color: white; border: none;
+            padding: 14px 35px; border-radius: 50px; font-weight: bold;
+            font-size: 1rem; cursor: pointer; box-shadow: 0 8px 25px rgba(255, 51, 102, 0.25);
+            margin-top: 15px;
+        }
+        .btn-core:hover { transform: translateY(-3px); box-shadow: 0 12px 30px var(--primary); }
+
+        /* Audio Module Cards */
+        .sound-row { display: flex; gap: 15px; margin-top: 25px; }
+        .sound-tile {
+            background: rgba(0,0,0,0.03); padding: 20px; border-radius: 20px;
+            flex: 1; cursor: pointer; border: 2px solid transparent;
+        }
+        .sound-tile.playing { border-color: var(--primary); background: rgba(255,51,102,0.08); }
+        .sound-tile span { display: block; font-size: 2rem; margin-bottom: 5px; }
+
+        footer { margin-top: 35px; font-size: 0.9rem; opacity: 0.6; font-weight: bold; letter-spacing: 0.5px; }
+    </style>
+</head>
+<body>
+
+    <div id="magic-canvas"></div>
+
+    <div class="controls">
+        <button class="util-btn" onclick="toggleMidnightTheme()">🌗 Midnight Mode</button>
+    </div>
+
+    <div class="oasis-container">
+        <div class="header-zone">
+            <h1>Happy Birthday, Babli! 👑</h1>
+            <p>Designed with infinite love by your boyfriend, Rajnish</p>
+        </div>
+
+        <div class="dock">
+            <button class="dock-item active" onclick="navigate('gift', this)">🎁 Surprise</button>
+            <button class="dock-item" onclick="navigate('letter', this)">💌 The Letter</button>
+            <button class="dock-item" onclick="navigate('meter', this)">💖 Affection</button>
+            <button class="dock-item" onclick="navigate('music', this)">🎵 Serenade</button>
+        </div>
+
+        <!-- TAB 1: THE VIRTUAL SURPRISE -->
+        <div id="screen-gift" class="screen active">
+            <h3>Tap your birthday present, Babli!</h3>
+            <p style="font-size: 0.9rem; opacity: 0.8;">Rajnish sent a virtual package straight to your screen.</p>
+            <div class="gift-box-area" onclick="popGiftBox()">
+                <div class="gift-box-emoji" id="giftBox">🎁</div>
+            </div>
+            <p id="gift-status" style="font-weight: bold; font-size: 1.2rem; min-height: 40px; color: var(--primary);"></p>
+        </div>
+
+        <!-- TAB 2: ROMANTIC LETTER ARCHIVE -->
+        <div id="screen-letter" class="screen">
+            <div class="letter-wrap">
+                <p>My Beautiful Babli,</p><br>
+                <p>From the moment you stepped into my universe, you turned my ordinary days into something magical. Your laugh is my favorite soundtrack, your happiness is my absolute mission, and your love is the greatest gift I have ever received.</p><br>
+                <p>On your birthday, I want to promise you that no matter how fast the world changes, my heart will always remain securely yours. I'm right here to support your dreams, protect your smile, and hold you tight through everything.</p>
+                <p class="signature">— Always Yours, Rajnish ❤️</p>
+            </div>
+        </div>
+
+        <!-- TAB 3: DYNAMIC LOVE METER & ENGINE -->
+        <div id="screen-meter" class="screen">
+            <h3>Rajnish & Babli's Lifelong Heartbeat Matrix</h3>
+            <p style="font-size: 0.85rem; opacity: 0.8;">Tap the pulsing core to send active love bursts and unlock premium statements!</p>
+            
+            <div class="heartbeat-core" onclick="boostAffectionMeter()">❤️</div>
+            
+            <div class="meter-track"><div class="meter-fill" id="loveFill"></div></div>
+            <p id="meter-lbl" style="font-weight: bold;">Affection Matrix: 20% (Standard Flow)</p>
+            
+            <div class="reason-card" id="reasonBox">
+                "Click the heart above to read a secret thought from my mind..."
+            </div>
+        </div>
+
+        <!-- TAB 4: BUILT-IN AMBIENT MUSIC ENGINE -->
+        <div id="screen-music" class="screen">
+            <h3>Cozy Background Serenade Generator</h3>
+            <p style="font-size: 0.9rem; opacity: 0.8;">Activate these beautiful synthetic loops to set the perfect romantic atmosphere while you explore this space.</p>
+            
+            <div class="sound-row">
+                <div class="sound-tile" onclick="toggleSynthTrack('melody', this)">
+                    <span>🎹</span> Acoustic Melodies
+                </div>
+                <div class="sound-tile" onclick="toggleSynthTrack('chimes', this)">
+                    <span>✨</span> Dreamy Stardust
+                </div>
+            </div>
+            <p id="music-status" style="margin-top: 25px; font-style: italic; font-size: 0.9rem; opacity: 0.7;">Audio Engine Ready...</p>
+        </div>
+
+        <footer>Handcrafted For Babli • Protected with Love Forever</footer>
+    </div>
+
+    <script>
+        // System Navigator 
+        function navigate(screenId, tabBtn) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.dock-item').forEach(b => b.classList.remove('active'));
+            document.getElementById('screen-' + screenId).classList.add('active');
+            tabBtn.classList.add('active');
+        }
+
+        // Theme Swapper (Midnight View Mode)
+        function toggleMidnightTheme() {
+            document.body.classList.toggle('dark-mode');
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            document.documentElement.setAttribute('data-theme', currentTheme === 'midnight' ? 'daylight' : 'midnight');
+        }
+
+        // Surprise Box Exploder Engine
+        let boxOpened = false;
+        function popGiftBox() {
+            if (boxOpened) return;
+            boxOpened = true;
+            
+            const box = document.getElementById('giftBox');
+            const txt = document.getElementById('gift-status');
+            
+            box.style.transform = 'scale(2) rotate(360deg)';
+            box.style.opacity = '0';
+            
+            setTimeout(() => {
+                box.innerText = '👑🌹💝';
+                box.style.transform = 'scale(1.2)';
+                box.style.opacity = '1';
+                box.style.animation = 'none';
+                txt.innerText = "Happy Birthday, My Queen! You deserve everything beautiful today! 🎉🎈";
+                
+                // Blast full screen with celebratory hearts
+                for(let i=0; i<25; i++) generateSkyParticle(true);
+            }, 400);
+        }
+
+        // Affection Matrix Engine & Memory Stream
+        let meterCharge = 20;
+        const memoryVault = [
+            "Because your smile instantly dissolves all my real-world stress. ✨",
+            "The absolute warmth I feel the second you wrap your arms around me. 🫂",
+            "Because you are breathtakingly stunning, inside and completely out. 🌸",
+            "The way you look out for me makes me realize how truly lucky I am to be your boyfriend. 🥺",
+            "Your sweet laugh is genuinely my favorite sound pattern in the universe. 🎵",
+            "Because I plan on keeping you incredibly happy for the rest of our days. 💍❤️"
+        ];
+
+        function boostAffectionMeter() {
+            if (meterCharge < 100) {
+                meterCharge += 16;
+                if (meterCharge > 100) meterCharge = 100;
+                document.getElementById('loveFill').style.width = meterCharge + '%';
+                document.getElementById('meter-lbl').innerText = `Affection Matrix: ${meterCharge}% (${meterCharge === 100 ? 'MAXIMUM ADORATION ACTIVE' : 'Overloading systems!'})`;
+            }
+            
+            const phrase = memoryVault[Math.floor(Math.random() * memoryVault.length)];
+            document.getElementById('reasonBox').innerText = phrase;
+            
+            for(let i=0; i<5; i++) generateSkyParticle(true);
+        }
+
+        // Synthesizer Audio Generation Core (Native WebAudio API Architecture)
+        let audioCtx = null;
+        let runningSynths = {};
+
+        function initAudioEngine() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function toggleSynthTrack(track, element) {
+            initAudioEngine();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            if (element.classList.contains('playing')) {
+                element.classList.remove('playing');
+                if (runningSynths[track]) {
+                    clearInterval(runningSynths[track].interval);
+                    delete runningSynths[track];
+                }
+                document.getElementById('music-status').innerText = "Serenade muted.";
+            } else {
+                element.classList.add('playing');
+                document.getElementById('music-status').innerText = "Playing sweet rhythmic synthesizers for you... 🎵";
+                
+                // Arpeggiator synth script to play delicate sweet notes natively
+                const notePitches = track === 'melody' ? [261.63, 329.63, 392.00, 523.25] : [587.33, 659.25, 783.99, 880.00]; // Romantic soft arrays
+                let count = 0;
+
+                const playbackLoop = setInterval(() => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(notePitches[count % notePitches.length], audioCtx.currentTime);
+                    
+                    gain.gain.setValueAtTime(track === 'melody' ? 0.15 : 0.08, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+                    
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 1.2);
+                    
+                    count++;
+                }, 400);
+
+                runningSynths[track] = { interval: playbackLoop };
+            }
+        }
+
+        // Sky Dust & Heart Generator
+        const canvas = document.getElementById('magic-canvas');
+        const icons = ['❤️', '✨', '🌸', '🧸', '💖', '👑'];
+
+        function generateSkyParticle(isBurst = false) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.innerText = icons[Math.floor(Math.random() * icons.length)];
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.fontSize = (Math.random() * 18 + 14) + 'px';
+            
+            if (isBurst) {
+                particle.style.left = (Math.random() * 50 + 25) + 'vw';
+                particle.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+            } else {
+                particle.style.animationDuration = (Math.random() * 4 + 5) + 's';
+            }
+            
+            canvas.appendChild(particle);
+            setTimeout(() => particle.remove(), 7500);
+        }
+
+        setInterval(() => generateSkyParticle(false), 1200);
+    </script>
+</body>
+</html>
